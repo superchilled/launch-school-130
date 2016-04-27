@@ -102,6 +102,15 @@ class TodoList
   def to_s
     @todos.each { |item| puts item.to_s }
   end
+
+  def each
+    counter = 0
+  
+    while counter < size
+      yield(@todos[counter])
+      counter += 1
+    end
+  end
 end
 
 # given
@@ -113,9 +122,9 @@ list = TodoList.new("Today's Todos")
 # ---- Adding to the list -----
 
 # add
-p list.add(todo1)                 # adds todo1 to end of list, returns list
-p list.add(todo2)                 # adds todo2 to end of list, returns list
-p list.add(todo3)                 # adds todo3 to end of list, returns list
+list.add(todo1)                 # adds todo1 to end of list, returns list
+list.add(todo2)                 # adds todo2 to end of list, returns list
+list.add(todo3)                 # adds todo3 to end of list, returns list
 # list.add(1)                     # raises TypeError with message "Can only add Todo objects"
 
 # <<
@@ -124,26 +133,26 @@ p list.add(todo3)                 # adds todo3 to end of list, returns list
 # ---- Interrogating the list -----
 
 # size
-p list.size                       # returns 3
+list.size                       # returns 3
 
 # first
-p list.first                      # returns todo1, which is the first item in the list
+list.first                      # returns todo1, which is the first item in the list
 
 # last
-p list.last                       # returns todo3, which is the last item in the list
+list.last                       # returns todo3, which is the last item in the list
 
 # ---- Retrieving an item in the list ----
 
 # item_at
 # p list.item_at                    # raises ArgumentError
-p list.item_at(1)                 # returns 2nd item in list (zero based index)
+list.item_at(1)                 # returns 2nd item in list (zero based index)
 # p list.item_at(100)               # raises IndexError
 
 # ---- Marking items in the list -----
 
 # mark_done_at
 # p list.mark_done_at               # raises ArgumentError
-p list.mark_done_at(1)            # marks the 2nd item as done
+list.mark_done_at(1)            # marks the 2nd item as done
 # p list.mark_done_at(100)          # raises IndexError
 
 # mark_undone_at
@@ -167,7 +176,7 @@ p list.mark_done_at(1)            # marks the 2nd item as done
 # ---- Outputting the list -----
 
 # to_s
-list.to_s                      # returns string representation of the list
+# list.to_s                      # returns string representation of the list
 
 # ---- Today's Todos ----
 # [ ] Buy milk
@@ -180,3 +189,7 @@ list.to_s                      # returns string representation of the list
 # [ ] Buy milk
 # [X] Clean room
 # [ ] Go to gym
+
+list.each do |todo|
+  puts todo                   # calls Todo#to_s
+end
