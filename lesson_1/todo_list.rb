@@ -1,7 +1,5 @@
 # todo_list.rb
 
-require 'pry'
-
 class Todo
   DONE_MARKER = 'X'
   UNDONE_MARKER = ' '
