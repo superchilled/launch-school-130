@@ -114,9 +114,33 @@ class TodoList
   end
 
   def select
-    new_list = TodoList.new("New List")
+    new_list = TodoList.new(title)
     each { |item| new_list << item if yield(item) }
     new_list
+  end
+
+  def find_by_title(title)
+    select { |item| item.title == title }.first
+  end
+
+  def all_done
+    select { |item| item.done? }
+  end
+  
+  def all_not_done
+    select { |item| !item.done? }
+  end
+
+  def mark_done(title)
+    select { |item| item.title == title }.first.done! 
+  end
+
+  def mark_all_done
+    each { |item| item.done! }
+  end
+
+  def mark_all_undone
+    each { |item| item.undone! }
   end
 end
 
@@ -197,10 +221,35 @@ list.mark_done_at(0)            # marks the 2nd item as done
 # [X] Clean room
 # [ ] Go to gym
 
-list.each do |todo|
-  puts todo                   # calls Todo#to_s
-end
+# list.each do |todo|
+#   puts todo                   # calls Todo#to_s
+# end
 
-results = list.select { |todo| todo.done? }    # you need to implement this method
+# results = list.select { |todo| todo.done? }    # you need to implement this method
 
-puts results.inspect
+# puts results.inspect
+
+# results = list.find_by_title('Buy milk')   # you need to implement this method
+
+# puts results.inspect
+
+# results = list.all_done   # you need to implement this method
+
+# puts results.inspect
+
+# results = list.all_not_done   # you need to implement this method
+
+# puts results.inspect
+
+list.mark_done('Clean room')   # you need to implement this method
+
+p list
+
+# results = list.mark_all_done   # you need to implement this method
+
+# puts results.inspect
+
+# results = list.mark_all_undone   # you need to implement this method
+
+# puts results.inspect
+
