@@ -110,6 +110,13 @@ class TodoList
       yield(@todos[counter])
       counter += 1
     end
+    self
+  end
+
+  def select
+    new_list = TodoList.new("New List")
+    each { |item| new_list << item if yield(item) }
+    new_list
   end
 end
 
@@ -152,7 +159,7 @@ list.item_at(1)                 # returns 2nd item in list (zero based index)
 
 # mark_done_at
 # p list.mark_done_at               # raises ArgumentError
-list.mark_done_at(1)            # marks the 2nd item as done
+list.mark_done_at(0)            # marks the 2nd item as done
 # p list.mark_done_at(100)          # raises IndexError
 
 # mark_undone_at
@@ -193,3 +200,7 @@ list.mark_done_at(1)            # marks the 2nd item as done
 list.each do |todo|
   puts todo                   # calls Todo#to_s
 end
+
+results = list.select { |todo| todo.done? }    # you need to implement this method
+
+puts results.inspect
